@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="qaas_default_subject_template">{{APP_NAME}} 피드백</string>
+	<string name="qaas_default_body_template">이 줄 위에 피드백을 작성해 주세요.\n\n앱: {{APP_NAME}}\n버전: {{APP_VERSION}}\nOS: {{OS_VERSION}}\n기기: {{DEVICE_MODEL}}</string>
+	<string name="qaas_error_missing_config">피드백 바로가기가 구성되지 않았습니다.</string>
+	<string name="qaas_error_no_mail_client">이메일 앱이 설치되어 있지 않습니다.</string>
+	<string name="qaas_error_generic">피드백 이메일을 열 수 없습니다.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="qaas_default_subject_template">{{APP_NAME}} へのフィードバック</string>
+	<string name="qaas_default_body_template">この行の上にフィードバックをご記入ください。\n\nアプリ: {{APP_NAME}}\nバージョン: {{APP_VERSION}}\nOS: {{OS_VERSION}}\n端末: {{DEVICE_MODEL}}</string>
+	<string name="qaas_error_missing_config">フィードバックショートカットが設定されていません。</string>
+	<string name="qaas_error_no_mail_client">メールアプリがインストールされていません。</string>
+	<string name="qaas_error_generic">フィードバック用メールを開けませんでした。</string>
+</resources>

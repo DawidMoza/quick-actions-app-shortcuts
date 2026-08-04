@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Shortcut tiles are often light; white glyphs need a solid circle behind them.
+	     Android does not honor Icon tint on static shortcuts. -->
+	<color name="qaas_shortcut_icon_bg">#FF5F6368</color>
+</resources>

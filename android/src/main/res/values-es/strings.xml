@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="qaas_default_subject_template">Comentarios sobre {{APP_NAME}}</string>
+	<string name="qaas_default_body_template">Escribe tus comentarios encima de esta línea.\n\nApp: {{APP_NAME}}\nVersión: {{APP_VERSION}}\nSO: {{OS_VERSION}}\nDispositivo: {{DEVICE_MODEL}}</string>
+	<string name="qaas_error_missing_config">El acceso directo de comentarios no está configurado.</string>
+	<string name="qaas_error_no_mail_client">No hay ninguna app de correo instalada.</string>
+	<string name="qaas_error_generic">No se pudo abrir el correo de comentarios.</string>
+</resources>

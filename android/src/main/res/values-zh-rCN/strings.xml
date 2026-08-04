@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="qaas_default_subject_template">关于 {{APP_NAME}} 的反馈</string>
+	<string name="qaas_default_body_template">请在此行上方写下您的反馈。\n\n应用：{{APP_NAME}}\n版本：{{APP_VERSION}}\n系统：{{OS_VERSION}}\n设备：{{DEVICE_MODEL}}</string>
+	<string name="qaas_error_missing_config">反馈快捷方式未配置。</string>
+	<string name="qaas_error_no_mail_client">未安装邮件应用。</string>
+	<string name="qaas_error_generic">无法打开反馈邮件。</string>
+</resources>

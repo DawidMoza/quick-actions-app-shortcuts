@@ -1,0 +1,51 @@
+# Godot
+.godot/
+*.translation
+export_presets.cfg.bak
+
+# Export-time generated localization overlays
+addons/QuickActionsAppShortcutsPlugin/generated/
+demo/addons/QuickActionsAppShortcutsPlugin/generated/
+
+# Demo Android build template / Gradle output (installed locally via Godot)
+demo/android/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Android library build
+android/.gradle/
+android/.kotlin/
+android/build/
+android/local.properties
+android/*.iml
+android/.idea/
+
+# iOS
+ios/plugin/build/
+ios/plugin/DerivedData/
+ios/**/*.xcuserstate
+ios/**/xcuserdata/
+*.ipa
+
+# Generic build clutter
+**/build/
+**/.gradle/
+*.apk
+*.aab
+*.keystore
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python / tooling
+__pycache__/
+*.pyc
+
+# Archives
+*.zip
+dist/

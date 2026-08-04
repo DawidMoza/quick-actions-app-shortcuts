@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="qaas_default_subject_template">Opinia o {{APP_NAME}}</string>
+	<string name="qaas_default_body_template">Napisz swoją opinię powyżej tej linii.\n\nAplikacja: {{APP_NAME}}\nWersja: {{APP_VERSION}}\nSystem: {{OS_VERSION}}\nUrządzenie: {{DEVICE_MODEL}}</string>
+	<string name="qaas_error_missing_config">Skrót opinii nie jest skonfigurowany.</string>
+	<string name="qaas_error_no_mail_client">Brak aplikacji pocztowej.</string>
+	<string name="qaas_error_generic">Nie udało się otworzyć e-maila z opinią.</string>
+</resources>

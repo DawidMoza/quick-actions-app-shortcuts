@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+	<!--
+		Placeholder shipped in the AAR. Export overwrites this with the host
+		applicationId as android:targetPackage (required — without it Android
+		treats the shortcut as an implicit VIEW and shows an empty chooser).
+	-->
+	<shortcut
+		android:shortcutId="qaas_send_feedback"
+		android:enabled="true"
+		android:icon="@drawable/ic_shortcut_mail"
+		android:shortcutShortLabel="@string/qaas_shortcut_feedback_short"
+		android:shortcutLongLabel="@string/qaas_shortcut_feedback_long">
+		<intent
+			android:action="android.intent.action.VIEW"
+			android:targetPackage="com.example.override_me"
+			android:targetClass="org.godotengine.plugin.quickactionsappshortcuts.FeedbackShortcutActivity" />
+	</shortcut>
+</shortcuts>

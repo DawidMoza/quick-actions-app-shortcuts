@@ -1,0 +1,84 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify tag matches plugin version
+        run: |
+          PLUGIN_VERSION="$(
+            awk -F= '/^version=/{gsub(/"/, "", $2); print $2}' \
+              addons/QuickActionsAppShortcutsPlugin/plugin.cfg
+          )"
+          if [[ "$GITHUB_REF_NAME" != "v${PLUGIN_VERSION}" ]]; then
+            echo "Tag $GITHUB_REF_NAME does not match plugin version $PLUGIN_VERSION."
+            exit 1
+          fi
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build Android AAR
+        run: ./scripts/build_android.sh
+
+      - name: Build iOS xcframework
+        run: ./scripts/build_ios.sh
+
+      - name: Verify native artifacts
+        run: |
+          test -f addons/QuickActionsAppShortcutsPlugin/bin/debug/QuickActionsAppShortcutsPlugin-debug.aar
+          test -f addons/QuickActionsAppShortcutsPlugin/bin/release/QuickActionsAppShortcutsPlugin-release.aar
+          test -f ios/plugins/QuickActionsAppShortcutsPlugin.gdip
+          test -f ios/plugins/QuickActionsAppShortcutsPlugin.xcframework/Info.plist
+          test -f ios/plugins/QuickActionsAppShortcutsPlugin.xcframework/ios-arm64/libQuickActionsAppShortcutsPlugin.a
+
+      - name: Pack release zip
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          STAGE="$(mktemp -d)"
+          mkdir -p "$STAGE/addons" "$STAGE/ios"
+          cp -R addons/QuickActionsAppShortcutsPlugin "$STAGE/addons/"
+          cp -R ios/plugins "$STAGE/ios/"
+          cp -R LICENSES "$STAGE/"
+          cp \
+            CHANGELOG.md \
+            CONTRIBUTING.md \
+            LICENSE \
+            README.md \
+            THIRD_PARTY_NOTICES.md \
+            quick_actions_app_shortcuts.cfg.example \
+            "$STAGE/"
+          (
+            cd "$STAGE"
+            zip -r "$GITHUB_WORKSPACE/QuickActionsAppShortcutsPlugin-${VERSION}.zip" .
+          )
+          echo "ASSET=QuickActionsAppShortcutsPlugin-${VERSION}.zip" >> "$GITHUB_ENV"
+          shasum -a 256 \
+            "QuickActionsAppShortcutsPlugin-${VERSION}.zip" \
+            > "QuickActionsAppShortcutsPlugin-${VERSION}.zip.sha256"
+          echo "CHECKSUM=QuickActionsAppShortcutsPlugin-${VERSION}.zip.sha256" >> "$GITHUB_ENV"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ env.ASSET }}
+            ${{ env.CHECKSUM }}
+          generate_release_notes: true

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="qaas_default_subject_template">Feedback su {{APP_NAME}}</string>
+	<string name="qaas_default_body_template">Scrivi il tuo feedback sopra questa riga.\n\nApp: {{APP_NAME}}\nVersione: {{APP_VERSION}}\nOS: {{OS_VERSION}}\nDispositivo: {{DEVICE_MODEL}}</string>
+	<string name="qaas_error_missing_config">Il collegamento feedback non è configurato.</string>
+	<string name="qaas_error_no_mail_client">Nessuna app e-mail installata.</string>
+	<string name="qaas_error_generic">Impossibile aprire l’e-mail di feedback.</string>
+</resources>
