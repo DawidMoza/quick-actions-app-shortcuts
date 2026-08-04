@@ -1,5 +1,9 @@
 # Quick Actions App Shortcuts
 
+<p align="center">
+  <img src="addons/QuickActionsAppShortcutsPlugin/icon.png" width="160" alt="Quick Actions App Shortcuts">
+</p>
+
 [![Version](https://img.shields.io/badge/version-0.1.0-orange)](CHANGELOG.md)
 [![Godot](https://img.shields.io/badge/Godot-4.7%2B-478CBF?logo=godotengine&logoColor=white)](https://godotengine.org)
 [![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20iOS-success)](#platform-notes)
