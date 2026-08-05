@@ -182,6 +182,13 @@ func android_values_folder(locale: String) -> String:
 			return "values-pt-rBR"
 		"pt_PT":
 			return "values-pt-rPT"
+		# Android resource folders still use legacy ISO 639 codes here.
+		"id":
+			return "values-in"
+		"he":
+			return "values-iw"
+		"yi":
+			return "values-ji"
 		_:
 			if "_" in normalized:
 				var parts := normalized.split("_")

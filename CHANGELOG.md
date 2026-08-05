@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-08-05
+
+### Fixed
+
+- Android localization now maps Indonesian (`id`) to `values-in` (and Hebrew/Yiddish to their legacy resource codes), matching Android resource-folder rules.
+
 ## [0.2.0] - 2026-08-05
 
 ### Added
@@ -37,5 +43,6 @@ Initial public release.
 - Demo project with runnable Android and iOS export presets
 - GitHub Actions release workflow that builds AAR + xcframework zip on `v*` tags
 
+[0.2.1]: https://github.com/DawidMoza/quick-actions-app-shortcuts/releases/tag/v0.2.1
 [0.2.0]: https://github.com/DawidMoza/quick-actions-app-shortcuts/releases/tag/v0.2.0
 [0.1.0]: https://github.com/DawidMoza/quick-actions-app-shortcuts/releases/tag/v0.1.0
