@@ -49,22 +49,17 @@ jobs:
           test -f ios/plugins/QuickActionsAppShortcutsPlugin.xcframework/Info.plist
           test -f ios/plugins/QuickActionsAppShortcutsPlugin.xcframework/ios-arm64/libQuickActionsAppShortcutsPlugin.a
 
+      - name: Sync addon docs
+        run: ./scripts/sync_addon_docs.sh
+
       - name: Pack release zip
         run: |
           VERSION="${GITHUB_REF_NAME}"
           STAGE="$(mktemp -d)"
           mkdir -p "$STAGE/addons" "$STAGE/ios"
-          cp -R addons/QuickActionsAppShortcutsPlugin "$STAGE/addons/"
+          # Asset Library layout: only addons/ + ios/plugins/ (docs live inside the addon).
+          rsync -a --exclude generated addons/QuickActionsAppShortcutsPlugin "$STAGE/addons/"
           cp -R ios/plugins "$STAGE/ios/"
-          cp -R LICENSES "$STAGE/"
-          cp \
-            CHANGELOG.md \
-            CONTRIBUTING.md \
-            LICENSE \
-            README.md \
-            THIRD_PARTY_NOTICES.md \
-            quick_actions_app_shortcuts.cfg.example \
-            "$STAGE/"
           (
             cd "$STAGE"
             zip -r "$GITHUB_WORKSPACE/QuickActionsAppShortcutsPlugin-${VERSION}.zip" .

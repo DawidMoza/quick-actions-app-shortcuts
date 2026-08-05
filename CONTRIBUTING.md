@@ -54,11 +54,19 @@ See [docs/TESTING.md](docs/TESTING.md) for the full checklist.
 - Update [CHANGELOG.md](CHANGELOG.md) under `[Unreleased]` when the change is user-visible.
 - Do not commit `demo/android/` or `**/generated/` overlays.
 
+## Asset Library package
+
+- `.gitattributes` limits `git archive` / AssetLib downloads to `addons/` + `ios/plugins/`.
+- Keep LICENSE / README / CHANGELOG / notices inside `addons/QuickActionsAppShortcutsPlugin/`
+  (AssetLib users only keep that folder).
+- After editing root `LICENSE`, `CHANGELOG.md`, or the cfg example, run
+  `./scripts/sync_addon_docs.sh` (addon `README.md` / `THIRD_PARTY_NOTICES.md` are edited in place).
+
 ## Versioning / releases
 
 - Version lives in `addons/QuickActionsAppShortcutsPlugin/plugin.cfg`.
 - Tag releases as `v0.1.0`, `v0.2.0`, … (semver).
 - Pushing a `v*` tag runs [.github/workflows/release.yml](.github/workflows/release.yml) and publishes a zip.
 - Before tagging, update the plugin version, README badge, demo Android/iOS versions,
-  and [CHANGELOG.md](CHANGELOG.md). The release workflow rejects tags that do not
-  match `plugin.cfg`.
+  and [CHANGELOG.md](CHANGELOG.md), then sync addon docs. The release workflow rejects
+  tags that do not match `plugin.cfg`.

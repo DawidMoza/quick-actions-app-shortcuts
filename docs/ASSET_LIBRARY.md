@@ -44,12 +44,29 @@ Requirements:
 - iOS 17.0+: enable QuickActionsAppShortcutsPlugin in the iOS export preset
 
 Install:
-1. Unpack the release zip into your project root so you get addons/QuickActionsAppShortcutsPlugin/ and ios/plugins/
+1. Unpack into your project root so you get addons/QuickActionsAppShortcutsPlugin/ and ios/plugins/
 2. Enable Quick Actions App Shortcuts under Project Settings -> Plugins
-3. Copy quick_actions_app_shortcuts.cfg.example to res://quick_actions_app_shortcuts.cfg and set recipient
+3. Copy addons/QuickActionsAppShortcutsPlugin/quick_actions_app_shortcuts.cfg.example to res://quick_actions_app_shortcuts.cfg and set recipient
 4. Export Android / iOS as usual
 
 Privacy: no telemetry, network requests, or automatic sending. Mail content is only drafted after the user taps the shortcut and can be edited or discarded.
 
 Docs, changelog, and device testing notes: https://github.com/DawidMoza/quick-actions-app-shortcuts
 ```
+
+## Download package layout
+
+Asset Library installs use GitHub's archive (or the release zip). Both should contain **only**:
+
+- `addons/QuickActionsAppShortcutsPlugin/` (plugin + LICENSE/README/CHANGELOG inside)
+- `ios/plugins/` (`.gdip` + xcframework)
+
+This is enforced by `.gitattributes` `export-ignore` rules. Verify locally:
+
+```bash
+git archive --format=zip --output /tmp/qaas-assetlib.zip HEAD
+unzip -l /tmp/qaas-assetlib.zip
+```
+
+Keep root-level LICENSE/README for the GitHub repo; copies under the addon folder ship with installs.
+`./scripts/sync_addon_docs.sh` refreshes LICENSE/CHANGELOG/cfg.example/LICENSES into the addon.

@@ -36,13 +36,16 @@ Users often uninstall without saying why. A home-screen shortcut is a low-fricti
 
 ## Installation
 
-1. Copy into your project:
-   - `addons/QuickActionsAppShortcutsPlugin/`
-   - `ios/plugins/QuickActionsAppShortcutsPlugin.gdip` and `QuickActionsAppShortcutsPlugin.xcframework`
+From the Asset Library / release zip (contains only `addons/` + `ios/plugins/`):
+
+1. Unpack into your project root
 2. Project → Project Settings → Plugins → enable **Quick Actions App Shortcuts**
-3. Copy `quick_actions_app_shortcuts.cfg.example` to
-   `res://quick_actions_app_shortcuts.cfg`, then set your recipient (or create it manually below)
+3. Copy `addons/QuickActionsAppShortcutsPlugin/quick_actions_app_shortcuts.cfg.example`
+   to `res://quick_actions_app_shortcuts.cfg`, then set your recipient
 4. Export Android / iOS as usual (iOS localization overlays are generated at export)
+
+From this repo (developers): copy `addons/QuickActionsAppShortcutsPlugin/` and
+`ios/plugins/` the same way.
 
 Keep the `.cfg` **outside** `addons/` so plugin updates do not overwrite your email settings.
 

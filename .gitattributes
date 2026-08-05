@@ -6,3 +6,15 @@
 *.aar binary
 *.jar binary
 *.png binary
+
+# Asset Library / git archive: only ship installable bits.
+/** export-ignore
+/addons !export-ignore
+/addons/** !export-ignore
+/ios !export-ignore
+/ios/plugins !export-ignore
+/ios/plugins/** !export-ignore
+
+# Never ship export-time overlays.
+/addons/QuickActionsAppShortcutsPlugin/generated export-ignore
+/addons/QuickActionsAppShortcutsPlugin/generated/** export-ignore
