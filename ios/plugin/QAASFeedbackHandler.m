@@ -135,11 +135,19 @@ static NSString *qaas_url_encode(NSString *value) {
 	return [value stringByAddingPercentEncodingWithAllowedCharacters:allowed] ?: @"";
 }
 
+static NSString *qaas_mailto_body(NSString *body) {
+	// RFC 6068 requires CRLF for line breaks in a mailto body. Some iOS mail
+	// clients collapse lone LF (%0A), even though NSString preserves it.
+	NSString *normalized = [body ?: @"" stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+	normalized = [normalized stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"];
+	return [normalized stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n"];
+}
+
 static NSURL *qaas_build_mailto(NSString *recipient, NSString *subject, NSString *body) {
 	NSString *urlString = [NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@",
 		recipient,
 		qaas_url_encode(subject ?: @""),
-		qaas_url_encode(body ?: @"")];
+		qaas_url_encode(qaas_mailto_body(body))];
 	return [NSURL URLWithString:urlString];
 }
 

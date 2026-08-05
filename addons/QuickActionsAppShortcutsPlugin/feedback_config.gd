@@ -205,9 +205,14 @@ func ios_lproj_name(locale: String) -> String:
 			return normalized.replace("_", "-")
 
 
+# Escape for Android <string> resources / XML attribute values.
+# Real newlines must become \n escapes — aapt collapses raw whitespace otherwise.
 func xml_escape(value: String) -> String:
 	return (
 		value
+		.replace("\\", "\\\\")
+		.replace("\n", "\\n")
+		.replace("\t", "\\t")
 		.replace("&", "&amp;")
 		.replace("\"", "&quot;")
 		.replace("'", "&apos;")
