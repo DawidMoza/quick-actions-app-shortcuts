@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Demo sets Project Settings → Application → Config → Version (`0.1.0`, matching export presets) so in-game `{{APP_VERSION}}` is filled without relying on the Android package fallback.
 
+### Changed
+
+- Docs now tell host projects to gitignore `addons/QuickActionsAppShortcutsPlugin/generated/` (export-time iOS overlays rebuilt from the `.cfg`).
+
 ## [0.2.3] - 2026-08-05
 
 ### Fixed

@@ -43,11 +43,18 @@ From the Asset Library / release zip (contains only `addons/` + `ios/plugins/`):
 3. Copy `addons/QuickActionsAppShortcutsPlugin/quick_actions_app_shortcuts.cfg.example`
    to `res://quick_actions_app_shortcuts.cfg`, then set your recipient
 4. Export Android / iOS as usual (iOS localization overlays are generated at export)
+5. Add this to your project `.gitignore` so export leftovers are not committed:
+
+```gitignore
+# Export-time generated localization overlays
+addons/QuickActionsAppShortcutsPlugin/generated/
+```
 
 From this repo (developers): copy `addons/QuickActionsAppShortcutsPlugin/` and
 `ios/plugins/` the same way.
 
 Keep the `.cfg` **outside** `addons/` so plugin updates do not overwrite your email settings.
+Do not commit `addons/QuickActionsAppShortcutsPlugin/generated/` — it is rebuilt from the `.cfg` on each iOS export.
 
 ## Usage
 

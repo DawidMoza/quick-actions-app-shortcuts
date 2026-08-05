@@ -25,8 +25,14 @@ Then:
 2. Copy `quick_actions_app_shortcuts.cfg.example` from this folder to
    `res://quick_actions_app_shortcuts.cfg` and set `recipient`
 3. Export Android / iOS as usual
+4. Ignore export-generated iOS overlays in your project `.gitignore`:
+
+```gitignore
+addons/QuickActionsAppShortcutsPlugin/generated/
+```
 
 Keep the `.cfg` **outside** `addons/` so plugin updates do not overwrite your email settings.
+Do not commit `generated/` — it is rebuilt from the `.cfg` on each iOS export.
 
 ## Usage
 
