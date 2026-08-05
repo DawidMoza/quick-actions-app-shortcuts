@@ -17,10 +17,10 @@ Emulators/simulators help, but **release requires physical devices**.
 - [ ] `quick_actions_app_shortcuts.cfg` with a real inbox
 - [x] Long-press app icon → **Send feedback** visible with mail/compose icon
 - [x] Tap → mail composer opens on Android and iOS
-- [x] Placeholders filled: app name, version, OS, device
+- [x] Placeholders filled: app name, version, OS, device (demo has `application/config/version`; in-game uses that, shortcut uses export-preset package version)
 - [x] Body `\n` line breaks appear as real newlines in the mail composer (Android + iOS)
-- [ ] `get_feedback_data()` returns the selected locale's recipient and templates
-- [ ] Rendered `subject` / `body` values have all diagnostic placeholders filled
+- [ ] Demo UI shows recipient / locale / subject from `get_feedback_data()`
+- [ ] Demo **Send feedback (in-game)** opens mail with the same rendered subject/body
 - [ ] Non-ASCII subject/body encode correctly
 - [x] At least one non-English locale shows a translated shortcut label from `[feedback.<locale>]`
 - [x] Configured `title` / `icon` appear in the long-press menu

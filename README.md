@@ -73,6 +73,11 @@ To turn the shortcut off, disable the plugin in Project Settings (or remove the 
 
 Placeholders (filled at tap time): `{{APP_NAME}}`, `{{APP_VERSION}}`, `{{OS_VERSION}}`, `{{DEVICE_MODEL}}`.
 
+Set **Project Settings → Application → Config → Version** so in-game `{{APP_VERSION}}` is filled
+(`get_feedback_data()` reads that setting). The home-screen shortcut uses the platform package
+version instead (Android `versionName` / iOS `CFBundleShortVersionString` from your export preset).
+The demo sets both to `0.1.0`.
+
 The app-icon shortcut creates the platform-specific email draft for you.
 
 ### In-game (optional)
@@ -160,7 +165,7 @@ Outputs:
 
 ## Demo
 
-Open the `demo/` folder in Godot 4.7+, set your real inbox in `quick_actions_app_shortcuts.cfg`, then remote-deploy to a device and long-press the icon.
+Open the `demo/` folder in Godot 4.7+, set your real inbox in `quick_actions_app_shortcuts.cfg`, then remote-deploy to a device. Long-press the app icon for the home-screen shortcut, or tap **Send feedback (in-game)** in the demo UI to exercise `get_feedback_data()`.
 
 Export presets are included (`Android` + `iOS`, both runnable):
 

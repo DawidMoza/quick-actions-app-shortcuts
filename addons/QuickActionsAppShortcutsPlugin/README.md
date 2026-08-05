@@ -42,6 +42,9 @@ body_template="Please share your feedback above this line.\n\nApp: {{APP_NAME}}\
 
 Subject/body templates are **plain text** (mailto), not HTML — use `\n` for line breaks.
 
+Set **Project Settings → Application → Config → Version** so in-game `{{APP_VERSION}}` is filled.
+The home-screen shortcut uses the export-preset package version on each platform.
+
 ## In-game API
 
 Reuse the same config from game code:

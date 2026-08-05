@@ -38,7 +38,7 @@ Commit rebuilt binaries when a release changes native code.
 2. Set a real inbox in `demo/quick_actions_app_shortcuts.cfg`.
 3. Android: **Project → Install Android Build Template**, then Remote Debug.
 4. iOS: enable the plugin in the iOS export preset, then Remote Debug.
-5. Long-press the app icon → **Send feedback**.
+5. Long-press the app icon → **Send feedback**, and/or tap **Send feedback (in-game)** in the demo UI.
 
 See [docs/TESTING.md](docs/TESTING.md) for the full checklist.
 

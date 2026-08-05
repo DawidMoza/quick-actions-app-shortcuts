@@ -24,16 +24,20 @@ https://raw.githubusercontent.com/DawidMoza/quick-actions-app-shortcuts/main/ico
 
 ## Description
 
+Paste into the Asset Library form (version **0.2.3**):
+
 ```
 Quick Actions App Shortcuts adds a Send feedback entry to the iOS and Android app-icon long-press menu. Tapping it opens the system mail composer with a pre-filled recipient, subject, and optional device diagnostics.
 
-v0.1 focus: static mailto feedback only. No game-side GDScript or scene node is required. Configuration is a single res://quick_actions_app_shortcuts.cfg file.
+Configuration is a single res://quick_actions_app_shortcuts.cfg file. No scene node is required for the home-screen shortcut. Optionally reuse the same config in-game via QuickActionsAppShortcuts.get_feedback_data().
 
 Features:
 - Home-screen shortcut on Android (App Shortcuts) and iOS (Quick Actions)
 - Configurable recipient, menu title, icon, subject, and body templates
 - Placeholders filled at tap time: app name, version, OS, device model
 - Per-locale overlays for title / subject / body
+- Optional GDScript helper for in-game feedback (game opens mail; helper only supplies localized data)
+- Editor plugin packs the shared .cfg into Android/iOS exports
 - Android trampoline opens Mail without starting Godot
 - iOS opens Mail from cold and warm quick actions
 - Invalid config fails export with a clear error; missing config is a clean no-op
@@ -49,7 +53,7 @@ Install:
 3. Copy addons/QuickActionsAppShortcutsPlugin/quick_actions_app_shortcuts.cfg.example to res://quick_actions_app_shortcuts.cfg and set recipient
 4. Export Android / iOS as usual
 
-Privacy: no telemetry, network requests, or automatic sending. Mail content is only drafted after the user taps the shortcut and can be edited or discarded.
+Privacy: no telemetry, network requests, or automatic sending. Mail content is only drafted after the user taps the shortcut (or your game opens mailto) and can be edited or discarded.
 
 Docs, changelog, and device testing notes: https://github.com/DawidMoza/quick-actions-app-shortcuts
 ```
