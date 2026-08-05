@@ -79,6 +79,17 @@ func _exit_tree() -> void:
 		ios_export_plugin = null
 
 
+class RuntimeConfig:
+	static func add_to_export(export_plugin: EditorExportPlugin) -> void:
+		if not FileAccess.file_exists(FeedbackConfig.CONFIG_PATH):
+			return
+		export_plugin.add_file(
+			FeedbackConfig.CONFIG_PATH,
+			FileAccess.get_file_as_bytes(FeedbackConfig.CONFIG_PATH),
+			false
+		)
+
+
 class AndroidExportPlugin extends EditorExportPlugin:
 	var _config: QuickActionsFeedbackConfig
 	var _config_loaded := false
@@ -116,6 +127,7 @@ class AndroidExportPlugin extends EditorExportPlugin:
 		# Godot may invoke every export plugin; only act on Android presets.
 		if not _supports_platform(get_export_platform()):
 			return
+		RuntimeConfig.add_to_export(self)
 		_config_loaded = false
 		_ensure_config()
 		if _config == null:
@@ -239,6 +251,7 @@ class IosExportPlugin extends EditorExportPlugin:
 	func _export_begin(_features: PackedStringArray, _is_debug: bool, _path: String, _flags: int) -> void:
 		if not _supports_platform(get_export_platform()):
 			return
+		RuntimeConfig.add_to_export(self)
 		_config_loaded = false
 		_pending_title_localizations.clear()
 		_ensure_config()

@@ -19,6 +19,8 @@ Emulators/simulators help, but **release requires physical devices**.
 - [x] Tap → mail composer opens on Android and iOS
 - [x] Placeholders filled: app name, version, OS, device
 - [x] Body `\n` line breaks appear as real newlines in the mail composer (Android + iOS)
+- [ ] `get_feedback_data()` returns the selected locale's recipient and templates
+- [ ] Rendered `subject` / `body` values have all diagnostic placeholders filled
 - [ ] Non-ASCII subject/body encode correctly
 - [x] At least one non-English locale shows a translated shortcut label from `[feedback.<locale>]`
 - [x] Configured `title` / `icon` appear in the long-press menu

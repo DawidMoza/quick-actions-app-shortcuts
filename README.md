@@ -73,7 +73,25 @@ To turn the shortcut off, disable the plugin in Project Settings (or remove the 
 
 Placeholders (filled at tap time): `{{APP_NAME}}`, `{{APP_VERSION}}`, `{{OS_VERSION}}`, `{{DEVICE_MODEL}}`.
 
-The plugin creates the platform-specific email draft intent / `mailto:` URL for you.
+The app-icon shortcut creates the platform-specific email draft for you.
+
+### In-game (optional)
+
+```gdscript
+var feedback := QuickActionsAppShortcuts.get_feedback_data()
+if not feedback.is_empty():
+	var mailto := "mailto:%s?subject=%s&body=%s" % [
+		feedback["recipient"],
+		str(feedback["subject"]).uri_encode(),
+		str(feedback["body"]).uri_encode(),
+	]
+	OS.shell_open(mailto)
+```
+
+`get_feedback_data(locale)` only reads data; the game decides how to open or display it.
+It returns `recipient`, selected `locale`, raw `subject_template` / `body_template`,
+and rendered `subject` / `body` with diagnostic placeholders filled. Omit `locale` to
+use `TranslationServer.get_locale()`.
 
 ### Shortcut title and icon (long-press menu)
 

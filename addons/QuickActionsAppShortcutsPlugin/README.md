@@ -42,4 +42,18 @@ body_template="Please share your feedback above this line.\n\nApp: {{APP_NAME}}\
 
 Subject/body templates are **plain text** (mailto), not HTML — use `\n` for line breaks.
 
+## In-game API
+
+Reuse the same config from game code:
+
+```gdscript
+var feedback := QuickActionsAppShortcuts.get_feedback_data()
+# feedback contains recipient, locale, subject_template, body_template,
+# and rendered subject/body with diagnostic placeholders filled.
+```
+
+When the editor plugin is enabled, it automatically includes
+`res://quick_actions_app_shortcuts.cfg` in exported games. The helper only extracts
+localized data; your game remains responsible for opening the mail client.
+
 See [CHANGELOG.md](CHANGELOG.md) for release notes. License: [LICENSE](LICENSE).
