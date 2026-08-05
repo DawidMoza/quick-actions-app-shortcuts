@@ -212,20 +212,39 @@ func ios_lproj_name(locale: String) -> String:
 			return normalized.replace("_", "-")
 
 
-# Escape for Android <string> resources / XML attribute values.
+# Escape for Android <string> element text (aapt2 string flattener).
+# Apostrophes/quotes must be \' / \", not XML entities — aapt2 decodes &apos; to a
+# raw ' before flatten, which then fails as an unescaped apostrophe.
 # Real newlines must become \n escapes — aapt collapses raw whitespace otherwise.
-func xml_escape(value: String) -> String:
+func android_string_escape(value: String) -> String:
 	return (
 		value
 		.replace("\\", "\\\\")
 		.replace("\n", "\\n")
 		.replace("\t", "\\t")
+		.replace("'", "\\'")
+		.replace("\"", "\\\"")
+		.replace("&", "&amp;")
+		.replace("<", "&lt;")
+		.replace(">", "&gt;")
+	)
+
+
+# Escape for Android XML attribute values (e.g. android:value="...").
+func xml_attr_escape(value: String) -> String:
+	return (
+		value
 		.replace("&", "&amp;")
 		.replace("\"", "&quot;")
 		.replace("'", "&apos;")
 		.replace("<", "&lt;")
 		.replace(">", "&gt;")
 	)
+
+
+# Backward-compatible alias used by older call sites / copies.
+func xml_escape(value: String) -> String:
+	return android_string_escape(value)
 
 
 func plist_escape(value: String) -> String:

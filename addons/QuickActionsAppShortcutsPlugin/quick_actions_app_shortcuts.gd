@@ -38,7 +38,11 @@ static func is_configured() -> bool:
 
 static func diagnostic_values() -> Dictionary:
 	var app_name := str(ProjectSettings.get_setting("application/config/name", ""))
-	var version := str(ProjectSettings.get_setting("application/config/version", ""))
+	var version := str(ProjectSettings.get_setting("application/config/version", "")).strip_edges()
+	# Export-preset version is not available at runtime; fall back to the installed
+	# package version when Project Settings version is left empty.
+	if version.is_empty():
+		version = _native_app_version()
 	var os_version := "%s %s" % [OS.get_name(), OS.get_version()]
 	var device := OS.get_model_name()
 	if device.is_empty():
@@ -49,6 +53,34 @@ static func diagnostic_values() -> Dictionary:
 		"{{OS_VERSION}}": os_version,
 		"{{DEVICE_MODEL}}": device,
 	}
+
+
+static func _native_app_version() -> String:
+	match OS.get_name():
+		"Android":
+			return _android_app_version()
+		_:
+			return ""
+
+
+static func _android_app_version() -> String:
+	var android_runtime = Engine.get_singleton("AndroidRuntime")
+	if android_runtime == null:
+		return ""
+	var activity = android_runtime.getActivity()
+	if activity == null:
+		return ""
+	var package_manager = activity.getPackageManager()
+	var package_name = activity.getPackageName()
+	if package_manager == null or str(package_name).is_empty():
+		return ""
+	var package_info = package_manager.getPackageInfo(package_name, 0)
+	if package_info == null:
+		return ""
+	var version_name = package_info.versionName
+	if version_name == null:
+		return ""
+	return str(version_name).strip_edges()
 
 
 static func _apply_template(template: String, values: Dictionary) -> String:

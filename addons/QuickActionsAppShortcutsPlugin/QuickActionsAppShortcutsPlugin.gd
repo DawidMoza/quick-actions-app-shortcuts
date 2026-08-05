@@ -121,7 +121,7 @@ class AndroidExportPlugin extends EditorExportPlugin:
 		_ensure_config()
 		if _config == null or not _config.present:
 			return ""
-		return ANDROID_APPLICATION_METADATA_TEMPLATE % _config.xml_escape(_config.recipient)
+		return ANDROID_APPLICATION_METADATA_TEMPLATE % _config.xml_attr_escape(_config.recipient)
 
 	func _export_begin(_features: PackedStringArray, is_debug: bool, _path: String, _flags: int) -> void:
 		# Godot may invoke every export plugin; only act on Android presets.
@@ -194,9 +194,9 @@ class AndroidExportPlugin extends EditorExportPlugin:
 		var mk := DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir_path))
 		if mk != OK and not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(dir_path)):
 			return mk
-		var title := _config.xml_escape(str(strings["title"]))
-		var subject := _config.xml_escape(str(strings["subject_template"]))
-		var body := _config.xml_escape(str(strings["body_template"]))
+		var title := _config.android_string_escape(str(strings["title"]))
+		var subject := _config.android_string_escape(str(strings["subject_template"]))
+		var body := _config.android_string_escape(str(strings["body_template"]))
 		return _write_text(
 			dir_path.path_join("qaas_strings.xml"),
 			ANDROID_STRINGS_XML_TEMPLATE % [title, title, subject, body]
