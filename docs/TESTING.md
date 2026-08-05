@@ -39,6 +39,8 @@ Emulators/simulators help, but **release requires physical devices**.
 - [ ] App already running → shortcut opens Mail (warm / performAction)
 - [ ] Document visible launch/splash before Mail (expected)
 - [ ] No mail handler → completion fails gracefully, game remains usable
+- [x] Export succeeds when a shortcut locale also exists in the project's Godot translations
+- [x] Localized title exports when the project has no Godot translations
 
 ## Stage 0 spike log
 

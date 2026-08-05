@@ -120,7 +120,7 @@ Notes:
 - Each locale section may set any of: `title`, `subject_template`, `body_template` (at least one required).
 - Omitted fields fall back to the default `[feedback]` values.
 - On **Android**, strings are written into the Gradle build resources at export (`values-<locale>/`) and chosen from the device language at tap time.
-- On **iOS**, titles use `InfoPlist.strings`; subject/body use `Localizable.strings`.
+- On **iOS**, titles use `InfoPlist.strings`; when Godot already creates that locale for project translations, the plugin merges its title into the existing file. Subject/body use `Localizable.strings`.
 - If a locale is missing, the device falls back to the default `[feedback]` strings.
 - If you leave default `subject_template` / `body_template` empty, the plugin’s built-in English defaults are used (still overridable per locale).
 

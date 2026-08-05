@@ -225,6 +225,8 @@ class AndroidExportPlugin extends EditorExportPlugin:
 class IosExportPlugin extends EditorExportPlugin:
 	var _config: QuickActionsFeedbackConfig
 	var _config_loaded := false
+	# lproj name -> localized shortcut title (merged after Godot writes InfoPlist.strings)
+	var _pending_title_localizations: Dictionary = {}
 
 	func _get_name() -> String:
 		return PLUGIN_NAME
@@ -238,6 +240,7 @@ class IosExportPlugin extends EditorExportPlugin:
 		if not _supports_platform(get_export_platform()):
 			return
 		_config_loaded = false
+		_pending_title_localizations.clear()
 		_ensure_config()
 		if _config == null:
 			return
@@ -275,6 +278,35 @@ class IosExportPlugin extends EditorExportPlugin:
 			_export_error(gen_error)
 			return
 
+	# Runs after Godot writes the Xcode project (including per-locale InfoPlist.strings).
+	func _end_generate_apple_embedded_project(path: String, _will_build_archive: bool) -> void:
+		if not _supports_platform(get_export_platform()):
+			return
+		if _pending_title_localizations.is_empty() or _config == null:
+			return
+
+		var app_dir := path.get_base_dir().path_join(path.get_file().get_basename())
+		var title_key := _config.strings_escape(_config.title)
+		for lproj in _pending_title_localizations.keys():
+			var info_path := app_dir.path_join("%s.lproj" % str(lproj)).path_join("InfoPlist.strings")
+			if not FileAccess.file_exists(info_path):
+				_export_error("Missing Godot-generated localization file at %s." % info_path)
+				return
+			var localized := _config.strings_escape(str(_pending_title_localizations[lproj]))
+			var line := "\"%s\" = \"%s\";" % [title_key, localized]
+			var existing := FileAccess.get_file_as_string(info_path)
+			if existing.contains("\"%s\"" % title_key):
+				continue
+			var file := FileAccess.open(info_path, FileAccess.READ_WRITE)
+			if file == null:
+				_export_error("Could not update %s." % info_path)
+				return
+			file.seek_end()
+			if not existing.is_empty() and not existing.ends_with("\n"):
+				file.store_string("\n")
+			file.store_string(line + "\n")
+			file.close()
+
 	func _write_ios_localization_files() -> String:
 		var abs_root := ProjectSettings.globalize_path(GENERATED_IOS_DIR)
 		var mk := DirAccess.make_dir_recursive_absolute(abs_root)
@@ -286,6 +318,7 @@ class IosExportPlugin extends EditorExportPlugin:
 		for locale in _config.localizations.keys():
 			locales[str(locale)] = _config.strings_for_locale(str(locale))
 
+		var godot_lprojs := _godot_project_lprojs()
 		for locale in locales.keys():
 			var strings: Dictionary = locales[locale]
 			var lproj := _config.ios_lproj_name(str(locale))
@@ -299,10 +332,7 @@ class IosExportPlugin extends EditorExportPlugin:
 			var subject := str(strings["subject_template"])
 			var body := str(strings["body_template"])
 
-			# Skip English InfoPlist.strings — Godot's iOS template already ships
-			# en.lproj/InfoPlist.strings, and a second copy fails Xcode archive.
-			# The English shortcut title comes from the injected Info.plist entry.
-			if lproj != "en":
+			if title != _config.title:
 				var info_plist := "\"%s\" = \"%s\";\n" % [
 					_config.strings_escape(_config.title),
 					_config.strings_escape(title),
@@ -310,7 +340,13 @@ class IosExportPlugin extends EditorExportPlugin:
 				var info_path := dir_res.path_join("InfoPlist.strings")
 				if _write_text(info_path, info_plist) != OK:
 					return "Could not write %s." % info_path
-				add_apple_embedded_platform_bundle_file(info_path)
+
+				if lproj == "en" or godot_lprojs.has(lproj):
+					# Godot already registers this destination. A second bundle file
+					# causes an Xcode "Multiple commands produce" archive failure.
+					_pending_title_localizations[lproj] = title
+				else:
+					add_apple_embedded_platform_bundle_file(info_path)
 
 			var localizable := (
 				"\"QAAS_SUBJECT_TEMPLATE\" = \"%s\";\n\"QAAS_BODY_TEMPLATE\" = \"%s\";\n"
@@ -322,6 +358,19 @@ class IosExportPlugin extends EditorExportPlugin:
 			add_apple_embedded_platform_bundle_file(localizable_path)
 
 		return ""
+
+	# Godot creates <locale>.lproj/InfoPlist.strings for each project Translation.
+	func _godot_project_lprojs() -> Dictionary:
+		var lprojs := {}
+		var paths: PackedStringArray = ProjectSettings.get_setting(
+			"internationalization/locale/translations",
+			PackedStringArray()
+		)
+		for path in paths:
+			var translation := ResourceLoader.load(path)
+			if translation is Translation:
+				lprojs[translation.get_locale()] = true
+		return lprojs
 
 	func _write_text(path: String, contents: String) -> Error:
 		var file := FileAccess.open(path, FileAccess.WRITE)
