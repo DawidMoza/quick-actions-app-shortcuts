@@ -49,3 +49,8 @@ __pycache__/
 # Archives
 *.zip
 dist/
+
+# Disposable analyses and previews (including their one-off helper scripts).
+output/
+outputs/
+.dev/
