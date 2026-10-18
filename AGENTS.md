@@ -1,7 +1,6 @@
----
-description: Keep disposable analyses and previews out of Git, while preserving feature work
-alwaysApply: true
----
+# Repository instructions
+
+## Local experiments
 
 - Keep disposable analysis deliverables (one-off reports, visual comparisons, preview renders, frame dumps, and scripts created solely to produce them) in ignored `output/`, `outputs/`, or `.dev/` directories.
 - Ignore the entire disposable analysis directory before creating its contents, including one-off helper scripts and configuration. Do not force-add these artifacts.
